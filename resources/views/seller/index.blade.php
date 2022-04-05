@@ -2,34 +2,6 @@
 
 @section('content')
 
-<div class="container mb-5 col-5">
-
-  <form method="POST" action="{{route('posts.search')}}">
-    @csrf
-    <ul class="navbar-nav ms-auto">
-      <div class="input-group">
-        <input type="search" name="search" class="form-control" placeholder="なにをお探しですか？">
-        <span class="">
-          <button type="submit" class="btn btn-primary text-light ms-3">検索</button>
-          <button class="btn btn-secondary my-2 ml-5">
-            <a href="{{route('posts.index')}}" class="text-white"> クリア</a>
-          </button>
-        </span>
-      </div>
-    </ul>
-  </form>
-
-  @isset($search_result)
-  <h3>{{$search_result}}</h3>
-  @endisset
-
-  @foreach ($posts as $post)
-  <a href="{{route('posts.show', ['post' => $post])}}">
-    {{$post->title}}
-  </a>
-  @endforeach
-</div>
-
 
 <div class="row">
   <div class="col-2">
@@ -58,10 +30,11 @@
       @endif
     </div>
     <div class="container mt-4">
+      <h2 class="mb-5">出品した商品</h2>
       <div class="row w-100 mb-5">
         @foreach($posts as $post)
           <div class="col-3">
-            <a href="{{route('posts.show', $post)}}">
+            <a href="{{route('seller.show', $post)}}">
               <img src="{{asset('img/dummy.png')}}" class="img-thumbnail">
             </a>
             <div class="row">
@@ -75,7 +48,12 @@
               </div>
             </div>
 
-            
+            <a href="{{route('posts.edit', $post)}}">編集する</a>
+            <form action="/posts/{{ $post->id }}" method="POST" onsubmit="if(confirm('本当に削除しますか?')) { return true } else {return false };">
+              @csrf
+              <input type="hidden" name="_method" value="DELETE">
+              <button type="submit" class="mt-3">削除する</button>
+            </form>
           </div>
         @endforeach
       </div>

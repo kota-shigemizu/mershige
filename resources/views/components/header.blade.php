@@ -11,7 +11,7 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
-                    
+
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
@@ -41,12 +41,7 @@
                                     <i class="far fa-heart text-light"></i>
                                 </a>
                             </li>
-                            <li class="nav-item mr-5">
-                                <a href="{{route('carts.index')}}" class="nav-link">
-                                    <i class="fas fa-shopping-cart text-light"></i>
-                                </a>
-                            </li>
-
+                            
                         @endguest
                     </ul>
                 </div>

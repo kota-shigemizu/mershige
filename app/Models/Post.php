@@ -19,6 +19,7 @@ class Post extends Model
         'title',
         'price',
         'description',
+        'status',
     ];
 
     public $sortable =
@@ -38,5 +39,9 @@ class Post extends Model
 
     public function nices() {
         return $this->hasMany('App\Models\Nice');
+    }
+
+    public function order() {
+        return $this->belongsTo('App\Models\Order');
     }
 }

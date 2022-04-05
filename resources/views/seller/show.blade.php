@@ -37,42 +37,14 @@
                 <p>カートに追加しました</p>
               </div>
             </div>
-            <div class="col-5 ">
-              <a href="/posts/{{ $post->id }}/nice" class="btn mershige-favorite-button text-dark w-100"></a>
-                  <span>
-                    <img src="{{asset('img/nicebutton.png')}}" width="30px">
 
-                      <!-- もし$niceがあれば＝ユーザーが「いいね」をしていたら -->
-                      @if($nice)
-                      <!-- 「いいね」取消用ボタンを表示 -->
-	                    <a href="{{ route('unnice', $post) }}" class="btn btn-success btn-sm">
-                        いいね
-	                    	<!-- 「いいね」の数を表示 -->
-		                    <span class="badge">
-                          {{ $post->nices->count() }}
-		                    </span>
-	                    </a>
-                      @else
-                      <!-- まだユーザーが「いいね」をしていなければ、「いいね」ボタンを表示 -->
-	                    <a href="{{ route('nice', $post) }}" class="btn btn-secondary btn-sm">
-                        いいね
-		                    <!-- 「いいね」の数を表示 -->
-		                    <span class="badge">
-                          {{ $post->nices->count() }}
-		                    </span>
-                    	</a>
-                      @endif
-                  </span>
-            </div>
-
-        </div>
       </form>
       @endauth
     </div>
   </div>
 
 
-  <a href="/posts">戻る</a>
+  <a href="/seller">戻る</a>
 
 </div>
 

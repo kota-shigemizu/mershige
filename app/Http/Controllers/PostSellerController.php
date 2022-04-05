@@ -8,9 +8,9 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 
 
-class PostController extends Controller
+class PostSellerController extends Controller
 {
-    /**
+  /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -30,15 +30,16 @@ class PostController extends Controller
             $sorted = $request->sort;
         }
 
+        $posts = Post::where('user_id', auth()->user()->id);
         if ($request->category !== null) {
-            $posts = Post::where('category_id', $request->category)->sortable($sort_query)->paginate(3);
-            $total_count = Post::where('category_id', $request->category)->count();
+            $posts = $posts->where('category_id', $request->category);
+            $total_count = $posts->count();
             $category = Category::find($request->category);
         } else {
-            $posts = Post::sortable($sort_query)->paginate(3);
             $total_count = "";
             $category = null;
         }
+        $posts = $posts->sortable($sort_query)->paginate(3);
 
         $sort = [
             '並び替え' => '',
@@ -48,13 +49,13 @@ class PostController extends Controller
             '出品の新しい順' => 'id desc'
         ];
 
-        
+
 
         // paginateにgetの役割も入っているため->get();は不要
         // $posts = Post::sortable()->paginate(3);
         $categories = Category::all();
         $major_category_names = Category::pluck('major_category_name')->unique();
-        return view('posts.index', compact('posts', 'category', 'categories', 'major_category_names', 'total_count', 'sort', 'sorted'));
+        return view('seller.index', compact('posts', 'category', 'categories', 'major_category_names', 'total_count', 'sort', 'sorted'));
     }
 
     /**
@@ -96,7 +97,7 @@ class PostController extends Controller
     public function show(Post $post)
     {
         $nice = Nice::where('post_id', $post->id)->where('user_id', auth()->user()->id)->first();
-        return view('posts.show', compact('post', 'nice'));
+        return view('seller.show', compact('post', 'nice'));
     }
 
     /**
@@ -143,16 +144,5 @@ class PostController extends Controller
     }
 
 
-    public function search(Request $request)
-    {
-        $posts = Post::where('title', 'LIKE', "%{$request->search}%")->paginate(3);
 
-        $search_result = $request->search."の検索結果".count($posts)."件";
-
-        $category = Category::find($request->category);
-        $categories = Category::all();
-        $major_category_names = Category::pluck('major_category_name')->unique();
-
-        return view('posts.index', compact('posts', 'search_result', 'category', 'categories', 'major_category_names'));
-    }
 }

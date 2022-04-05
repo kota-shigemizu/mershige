@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Post;
 use App\Models\Nice;
+use App\Models\Order;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
@@ -88,4 +89,11 @@ class UserController extends Controller
          return view('users.nice', compact('nices'));
      }
 
+     public function order_history()
+     {
+         /** @var User $user */
+         $user = Auth::user();
+         $orders = ($user)->orders()->get();
+        return view('users.order_history', compact('orders'));
+     }
 }
