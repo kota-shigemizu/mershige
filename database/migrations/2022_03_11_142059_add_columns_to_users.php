@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddCloumnsToUsers extends Migration
+class AddColumnsToUsers extends Migration
 {
     /**
      * Run the migrations.
@@ -15,7 +15,7 @@ class AddCloumnsToUsers extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->string('postal_code')->default('');
-            $table->text('address')->default('');
+            $table->text('address')->nullable(true);
             $table->string('phone')->default('');
         });
     }
